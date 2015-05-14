@@ -17,12 +17,23 @@ ping -c 5 8.8.8.8
 
 #これ以降をループさせる
 # 第４オクテット以外を、最初に抽出したものから引っ張りたい
-COUNT=0
-MAX_COUNT=255
-while [ $COUNT -lt $MAX_COUNT ]
+
+####forループ
+$COUNT=0
+#MAX_COUNT=255
+for i in 1 2 3 4 5 6 7 8 9
 do
         #echo "$COUNT"
-        COUNT=`expr $COUNT + 1`
+        COUNT=`expr $COUNT + $i`
         ping -c 5 192.168.100.`echo "$COUNT"`
 done
+
+####whileループ
+#COUNT=0
+#MAX_COUNT=255
+#while [ $COUNT -lt $MAX_COUNT ]
+#do
+#        COUNT=`expr $COUNT + 1`
+#        ping -c 5 192.168.100.`echo "$COUNT"`
+#done
 exit 0
