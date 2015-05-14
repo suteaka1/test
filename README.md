@@ -15,5 +15,7 @@ https://raw.githubusercontent.com/suteaka1/test/master/process_report.sh
 # 使い方
 ダウンロード
 ~$ wget https://raw.githubusercontent.com/suteaka1/test/master/pingattack.sh ; chmod +x pingattack.sh
+
+
 実行
 ~$ ./pingattack.sh
