@@ -18,6 +18,10 @@
 echo "長時間動いていたプロセス上位10を表示します"
 ps --no-header aux | sort -r -k 10 | head -n 10
 
+# read -p "表示したいフィールドを選んでください。そのうちの上位10までを表示します: " field
+# ps --no-header aux | sort -r -k $field | head -n 10
+#
+
 echo "長時間動いていたプロセス下位10を表示します"
 ps --no-header aux | sort -r -k 10 | tail -n 10
 
