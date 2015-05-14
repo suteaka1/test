@@ -4,6 +4,8 @@
 #所属するネットワークを抽出
 #ひとつひとつをなるべく簡素にした。
 #ipv6が必要になったときに簡単に変更できるようあえて1文で削らない。
+#
+#下のwhileループに第一、第二、第三オクテットを引き渡したいが途中のまま
 eth0=ip a | grep 'inet' | grep -v 'inet6' | grep -v 'eth1' | grep -v '127.0.0.1' | sed s/inet/inet:/ | cut -d: -f2 | awk '{ print $1}'
 eth0=$a.$b.$c.$d
 
@@ -18,22 +20,22 @@ ping -c 5 8.8.8.8
 #これ以降をループさせる
 # 第４オクテット以外を、最初に抽出したものから引っ張りたい
 
-####forループ
-$COUNT=0
-#MAX_COUNT=255
-for i in 1 2 3 4 5 6 7 8 9
+####whileループ
+COUNT=0
+MAX_COUNT=255
+while [ $COUNT -lt $MAX_COUNT ]
 do
-        #echo "$COUNT"
-        COUNT=`expr $COUNT + $i`
+        COUNT=`expr $COUNT + 1`
         ping -c 5 192.168.100.`echo "$COUNT"`
 done
 
-####whileループ
-#COUNT=0
-#MAX_COUNT=255
-#while [ $COUNT -lt $MAX_COUNT ]
+####forループ
+#$COUNT=0
+                        #MAX_COUNT=255
+#for i in 1 2 3 4 5 6 7 8 9
 #do
-#        COUNT=`expr $COUNT + 1`
+        #まちがいあり
+#        COUNT=`expr $COUNT + $i`
 #        ping -c 5 192.168.100.`echo "$COUNT"`
 #done
 exit 0
