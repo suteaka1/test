@@ -30,8 +30,12 @@
 #
 ## awk '{ print $1}'    -> cutで先頭部分を排除できたので、ipアドレスのある部分を引数「$1」とawkをつかって出力する。
 
-eth0=ip a | grep 'inet' | grep /24 | grep -v 'inet6' | grep -v 'eth1' | grep -v '127.0.0.1' | sed s/inet/inet:/ | cut -d: -f2 | awk '{ print $1}'
-eth0=$1.$2.$3.$4
+ip a | grep 'inet' | grep /24 | grep -v 'inet6' | grep -v 'eth1' | grep -v '127.0.0.1' | sed s/inet/inet:/ | cut -d: -f2 | awk '{ print $1}'
+#eth0=$1.$2.$3.$4
+
+#この段階で$1はIPアドレスしか引っ張れていない
+#なのでオクテットごとに渡せるよう工夫する
+echo $1
 
 ##  192.168.20.100/24
 ## だとしたら、第三オクテットまで取得して以下でforループに使う
@@ -40,19 +44,19 @@ eth0=$1.$2.$3.$4
 ##               =>ハードルがあがるので今回は無しということに。上述した/24で絞る理由がこれ。
 
 #まずインターネットに繋がるかどうか確認(googleDNSに向けて)
-ping -c 5 8.8.8.8
+#ping -c 5 8.8.8.8
 
 #これ以降をループさせる
 # 第４オクテット以外を、最初に抽出したものから引っ張りたい
 
 ####whileループ
-COUNT=0
-MAX_COUNT=255
-while [ $COUNT -lt $MAX_COUNT ]
-do
-        COUNT=`expr $COUNT + 1`
-        ping -c 5 $1.$2.$3.`echo "$COUNT"`
-done
+#COUNT=0
+#MAX_COUNT=255
+#while [ $COUNT -lt $MAX_COUNT ]
+#do
+#        COUNT=`expr $COUNT + 1`
+#        ping -c 5 $1.$2.$3.`echo "$COUNT"`
+#done
 
 #####=========残骸=========
 ####forループ
