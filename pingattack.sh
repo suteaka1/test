@@ -31,7 +31,17 @@
 ## awk '{ print $1}'    -> cutで先頭部分を排除できたので、ipアドレスのある部分を引数「$1」とawkをつかって出力する。
 
 ip a | grep 'inet' | grep /24 | grep -v 'inet6' | grep -v 'eth1' | grep -v '127.0.0.1' | sed s/inet/inet:/ | cut -d: -f2 | awk '{ print $1}'
-#eth0=$1.$2.$3.$4
+
+
+#~$ ip a | grep 'inet' | grep /24 | grep -v 'inet6' | grep -v 'eth1' | grep -v '127.0.0.1' | sed s/inet/inet:/ | cut -d: -f2 | awk '{ print $1}'
+#192.168.20.10/24
+#~$ ip a | grep 'inet' | grep /24 | grep -v 'inet6' | grep -v 'eth1' | grep -v '127.0.0.1' | sed s/inet/inet:/ | cut -d: -f2 | awk '{ print $1}' | sed -e 's/\/24//g' | tr '.' '    '
+#192 168 20 10
+
+##参考
+#変数展開時の単語分割（word split）をマスターする
+#http://qiita.com/uasi/items/82b7708d5da213ba7c31
+
 
 #この段階で$1はIPアドレスしか引っ張れていない
 #なのでオクテットごとに渡せるよう工夫する
