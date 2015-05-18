@@ -34,7 +34,7 @@ function echo_4th {
 
 ####パイプ間のコマンドの説明
 ## ip a                 -> ifconfigなどで使われるnet-toolsは長い間メンテナンスされていなかったということで大変危険なので
-##                      (理由:http://iwashi.co/2014/08/07/reason-why-we-should-use-iproute2/ 
+##                      (理由:http://iwashi.co/2014/08/07/reason-why-we-should-use-iproute2/ )
 ##                      https://dougvitale.wordpress.com/2011/12/21/deprecated-linux-networking-commands-and-their-replacements/)
 ##                      代用になるiproute2を使うことに。
 ##                      また、ifconfigには:がipv4アドレスの手前にあったのでcutのデリミタで使えたが、ip addr showにはないので
