@@ -6,13 +6,13 @@
 ## 把握できるようになるべく凝ったことをしないよう決めた。
 #
 ###課題
-###・下のwhileループに第一、第二、第三オクテットを引き渡せるようにする      ==>　クリア
-###・pingして応答するかしないかを判断する条件式を付与する       -> sleepの必要性
+###・下のwhileループに第一、第二、第三オクテットを引き渡せるようにする              ==>　クリア
+###・pingして応答するかしないかを判断する条件式を付与する       -> sleepの必要性    ==>　不要
 ###・最後に結果を出力して正規表現で整形する？                   -> もっと高度なテキスト処理と、cronでまわすことで定期的なログを取れる？
 
 ##参考
-#変数展開時の単語分割（word split）をマスターする
-#http://qiita.com/uasi/items/82b7708d5da213ba7c31
+# 変数展開時の単語分割（word split）をマスターする
+# http://qiita.com/uasi/items/82b7708d5da213ba7c31
 
 # 第1引数を echo する関数
 function echo_1st {
@@ -68,6 +68,8 @@ while [ $COUNT -lt $MAX_COUNT ]
 do
         COUNT=`expr $COUNT + 1`
         ping -c 5 `echo "$ip3"`.`echo "$COUNT"`
+        # -c[count] 5一つで約5秒かかるが、sleepしなくても順序は飛ばさない模様？
+        # sleep 5
 done
 
 exit 0
