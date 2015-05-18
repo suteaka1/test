@@ -1,12 +1,10 @@
-# test
-
-# 機能？
+# 機能
 ①
 目的：自分の所属するネットワークアドレスを元に、
 ネットワーク内で他に疎通が取れる機器を探し出す
 
 
-使えるもの：whileループ、sed、awk、cut、grep
+使えるもの：whileループ、sed、awk、cut、grep、tr
 
 
 https://raw.githubusercontent.com/suteaka1/test/master/pingattack.sh
@@ -33,14 +31,14 @@ https://raw.githubusercontent.com/suteaka1/test/master/process_report.sh
 ~$ ./pingattack.sh
 
 
-
-# お役立ちで無い情報
+# その他
 
 ●1.シェルスクリプトのコメント行が長いので消し去りたい
  
  ~$ grep -v \\# pingattack.sh
  
-●2.編集履歴(黒歴史)を確認したい
+ 
+●2.編集履歴を確認したい
 
 https://github.com/suteaka1/test/blob/master/pingattack.sh
 
@@ -49,6 +47,7 @@ https://github.com/suteaka1/test/blob/master/pingattack.sh
 https://github.com/suteaka1/test/commits/master/pingattack.sh
 
 に編集履歴が並んでいるので1番下以外を選ぶとsdiffした結果が見える
+
 
 ●3.シェルスクリプトをそのままtext形式でダウンロードして使いたい
 
