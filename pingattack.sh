@@ -1,6 +1,4 @@
 #!/bin/sh
-ip=$(ip a | grep 'inet' | grep /24 | grep -v 'inet6' | grep -v 'eth1' | grep -v '127.0.0.1' | sed s/inet/inet:/ | cut -d: -f2 | awk '{ print $1}' | sed -e 's/\/24//g' | tr '.' '    ')
-
 ##参考
 #変数展開時の単語分割（word split）をマスターする
 #http://qiita.com/uasi/items/82b7708d5da213ba7c31
@@ -16,6 +14,8 @@ function echo_3rd {
 function echo_4th {
     echo $4
 }
+
+ip=$(ip a | grep 'inet' | grep /24 | grep -v 'inet6' | grep -v 'eth1' | grep -v '127.0.0.1' | sed s/inet/inet:/ | cut -d: -f2 | awk '{ print $1}' | sed -e 's/\/24//g' | tr '.' '    ')
 
 ####whileループ
 COUNT=0
