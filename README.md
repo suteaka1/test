@@ -36,11 +36,11 @@ https://raw.githubusercontent.com/suteaka1/test/master/process_report.sh
 
 # お役立ちで無い情報
 
-1.シェルスクリプトのコメント行が長いので消し去りたい
+●1.シェルスクリプトのコメント行が長いので消し去りたい
  
  ~$ grep -v \\# pingattack.sh
  
-2.編集履歴(黒歴史)を確認したい
+●2.編集履歴(黒歴史)を確認したい
 
 https://github.com/suteaka1/test/blob/master/pingattack.sh
 
@@ -50,6 +50,6 @@ https://github.com/suteaka1/test/commits/master/pingattack.sh
 
 に編集履歴が並んでいるので1番下以外を選ぶとsdiffした結果が見える
 
-3.シェルスクリプトをそのままtext形式でダウンロードして使いたい
+●3.シェルスクリプトをそのままtext形式でダウンロードして使いたい
 
  2.とおなじページで「raw」ボタンをクリックする
