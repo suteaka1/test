@@ -14,3 +14,5 @@ cat jointemp3 | grep -v "100% packet loss"
 
 #つながらないやつ
 cat jointemp3 | grep "100% packet loss"
+
+
