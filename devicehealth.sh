@@ -11,7 +11,7 @@ jointemp3=$(mktemp jointemp3.XXXX)
 #touch jointemp2
 grep "statistics" $logfile > $jointemp1
 grep "% packet loss" $logfile > $jointemp2
-paste $jointemp1 $jointemp2 > jointemp3
+paste $jointemp1 $jointemp2 > $jointemp3
 
 #grep "statistics" $logfile >> jointemp1
 #grep "% packet loss" $logfile >> jointemp2
@@ -22,10 +22,10 @@ paste $jointemp1 $jointemp2 > jointemp3
 ###ここはオプションで引き渡す
 ###
 #つながるやつ
-cat jointemp3 | grep -v "100% packet loss"
+cat $jointemp3 | grep -v "100% packet loss"
 
 #つながらないやつ
-cat jointemp3 | grep "100% packet loss"
+cat $jointemp3 | grep "100% packet loss"
 
 ###課題
 ##1.  logfileを引っ張れるようにする　もしくはpingattack.shと一緒にまとめる？
