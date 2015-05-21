@@ -21,11 +21,15 @@ paste $jointemp1 $jointemp2 > $jointemp3
 ###
 ###ここはオプションで引き渡す
 ###
+###疎通可能であれば   =>  o
+###疎通不可であれば   =>  x
+###を行頭に挿入
+
 #つながるやつ
-cat $jointemp3 | grep -v "100% packet loss"
+cat $jointemp3 | grep -v "100% packet loss" | sed -e 's/^/o/g'
 
 #つながらないやつ
-cat $jointemp3 | grep "100% packet loss"
+cat $jointemp3 | grep "100% packet loss" | sed -e 's/^/x/g'
 
 ###課題
 ##1.  logfileを引っ張れるようにする　もしくはpingattack.shと一緒にまとめる？
