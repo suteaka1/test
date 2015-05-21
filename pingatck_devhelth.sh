@@ -7,6 +7,7 @@
 #
 
 temp1=$(mktemp temp1.XXXX)
+temp2=$(mktemp temp2.XXXX)
 
 ####パイプ間のコマンドの説明
 ## ip a                 -> ifconfigなどで使われるnet-toolsは長い間メンテナンスされていなかったということで大変危険なので
@@ -52,7 +53,7 @@ do
         COUNT=`expr $COUNT + 1`
         #ひとまずroot権限有りアカウントで
         sudo ping -f -c 5 `echo "$ip1"`.`echo "$ip2"`.`echo "$ip3"`.`echo "$COUNT"` > $temp1
-        grep "% packet loss" | $( $reachable || $reachable )
+        grep "% packet loss" | $( $reachable || $reachable ) > $temp2
         sleep 6
         # -c[count] 5一つで約5秒かかるが、sleepしなくても順序は飛ばさない模様？
         # sleep 5
