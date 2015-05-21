@@ -26,10 +26,20 @@ paste $jointemp1 $jointemp2 > $jointemp3
 ###を行頭に挿入
 
 #つながるやつ
-cat $jointemp3 | grep -v "100% packet loss" | sed -e 's/^/o/g'
+rechable=cat $jointemp3 | grep -v "100% packet loss" | sed -e 's/^/o/g'
 
 #つながらないやつ
-cat $jointemp3 | grep "100% packet loss" | sed -e 's/^/x/g'
+unrechable=cat $jointemp3 | grep "100% packet loss" | sed -e 's/^/x/g'
+
+allresult=$rechable ; $unrechable
+
+while getopts r:u:a: OPT
+do
+  case $OPT in
+    r)  reachable = "$OPTARG"   ;;
+    u)  unreachable = "$OPTARG"   ;;
+    a)  allresult = "$OPTARG"   ;;
+done
 
 ###課題
 ##1.  logfileを引っ張れるようにする　もしくはpingattack.shと一緒にまとめる？
