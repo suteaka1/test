@@ -5,10 +5,8 @@
 ## ひとつひとつをなるべく簡素にして、パイプの途中で区切ってその段階ではどういった処理を終えたのか、
 ## 把握できるようになるべく凝ったことをしないよう決めた。
 #
-###課題
-###・下のwhileループに第一、第二、第三オクテットを引き渡せるようにする              ==>　クリア
-###・pingして応答するかしないかを判断する条件式を付与する       -> sleepの必要性    ==>　不要
-###・最後に結果を出力して正規表現で整形する？                   -> もっと高度なテキスト処理と、cronでまわすことで定期的なログを取れる？
+
+temp1=$(mktemp temp1.XXXX)
 
 ####パイプ間のコマンドの説明
 ## ip a                 -> ifconfigなどで使われるnet-toolsは長い間メンテナンスされていなかったということで大変危険なので
@@ -39,12 +37,23 @@ ip2=`ip a | grep 'inet' | grep /24 | grep -v 'inet6' | grep -v 'eth1' | grep -v 
 ip3=`ip a | grep 'inet' | grep /24 | grep -v 'inet6' | grep -v 'eth1' | grep -v '127.0.0.1' | awk '{ print $2}' | sed -e 's/\/24//g' | tr '.' '    ' | awk '{ print $3}'`
 
 # 192.168.100.x の x 部分を0から255の順に試す
-COUNT=0
-MAX_COUNT=255
+#が、ひとまず現実的ではないので削る
+#COUNT=0
+#MAX_COUNT=255
+
+reachable=$(grep -v "100% packet loss" | sed -e 's/^/o/g')
+unreachable=$(grep "100% packet loss" | sed -e 's/^/x/g')
+        
+        
+COUNT=1
+MAX_COUNT=10
 while [ $COUNT -lt $MAX_COUNT ]
 do
         COUNT=`expr $COUNT + 1`
-        ping -c 5 `echo "$ip1"`.`echo "$ip2"`.`echo "$ip3"`.`echo "$COUNT"`
+        #ひとまずroot権限有りアカウントで
+        sudo ping -f -c 5 `echo "$ip1"`.`echo "$ip2"`.`echo "$ip3"`.`echo "$COUNT"` > $temp1
+        grep "% packet loss" | $( $reachable || $reachable )
+        sleep 6
         # -c[count] 5一つで約5秒かかるが、sleepしなくても順序は飛ばさない模様？
         # sleep 5
 done
