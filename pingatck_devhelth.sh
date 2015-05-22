@@ -42,8 +42,9 @@ ip3=`ip a | grep 'inet' | grep /24 | grep -v 'inet6' | grep -v 'eth1' | grep -v 
 #COUNT=0
 #MAX_COUNT=255
 
-reachable=$(grep "% packet loss" $temp1 | grep -v "100% packet loss" | sed -e 's/^/o/g')
-unreachable=$(grep "% packet loss" $temp1 | grep "100% packet loss" | sed -e 's/^/x/g')
+output=$( grep "% packet loss" $temp1 )
+reachable=$( $( echo $output ) | grep -v "100% packet loss" | sed -e 's/^/o/g' )
+unreachable=$( $( echo $output ) | grep "100% packet loss" | sed -e 's/^/x/g' )
         
         
 COUNT=1
