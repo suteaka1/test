@@ -43,8 +43,8 @@ ip3=`ip a | grep 'inet' | grep /24 | grep -v 'inet6' | grep -v 'eth1' | grep -v 
 #MAX_COUNT=255
 
 output=$( grep "% packet loss" $temp1 )
-reachable=$( $( echo $output ) | grep -v "100% packet loss" | sed -e 's/^/o/g' )
-unreachable=$( $( echo $output ) | grep "100% packet loss" | sed -e 's/^/x/g' )
+#reachable=$( $( echo $output ) | grep -v "100% packet loss" | sed -e 's/^/o/g' )
+#unreachable=$( $( echo $output ) | grep "100% packet loss" | sed -e 's/^/x/g' )
         
         
 COUNT=1
@@ -54,7 +54,11 @@ do
         COUNT=`expr $COUNT + 1`
         #ひとまずroot権限有りアカウントで
         sudo ping -f -c 5 `echo "$ip1"`.`echo "$ip2"`.`echo "$ip3"`.`echo "$COUNT"` > $temp1
-        $reachable || $reachable >> $temp2
+        #$reachable || $unreachable >> $temp2
+        case "$output" in
+        r) grep -v "100% packet loss" | sed -e 's/^/o/g' ;;
+        u) grep "100% packet loss" | sed -e 's/^/x/g' ;;
+        esac
         sleep 6
         # -c[count] 5一つで約5秒かかるが、sleepしなくても順序は飛ばさない模様？
         # sleep 5
