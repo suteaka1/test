@@ -11,9 +11,6 @@ temp1=$(mktemp temp1.XXXX)
 temp2=$(mktemp temp2.XXXX)
 
 ####パイプ間のコマンドの説明
-###                     講習で使う際はパイプがない状態から徐々にコマンドをつなげていって、
-###                     どのような処理をしているのか触らせて教えるのが効果的と思われる。
-
 ## ip a                 -> ifconfigなどで使われるnet-toolsは長い間メンテナンスされていなかったということで大変危険なので
 ##                      (理由:http://iwashi.co/2014/08/07/reason-why-we-should-use-iproute2/ )
 ##                      https://dougvitale.wordpress.com/2011/12/21/deprecated-linux-networking-commands-and-their-replacements/)
@@ -39,14 +36,21 @@ ip3=`ip a | grep 'inet' | grep /24 | grep -v 'inet6' | grep -v 'eth1' | grep -v 
 #MAX_COUNT=255
 
 # packet lossの含まれる行の抽出
-output=$( grep "% packet loss" $temp1 )
+#output=`grep "% packet loss" $temp1`
 
 # packet lossの含まれる行の「中で」疎通可能か不可能化判別する[上のoutputが存在しないと-vでそれ以外の行を出力してしまう]
 
 # 疎通可能
-reachable=$( $( echo $output ) | grep -v "100% packet loss" | sed -e 's/^/o/g' )
+#reachable=` echo $output | grep -v "100% packet loss" | sed -e 's/^/o/g' `
 # 疎通負荷
-unreachable=$( $( echo $output ) | grep "100% packet loss" | sed -e 's/^/x/g' )
+#unreachable=` echo $output  | grep "100% packet loss" | sed -e 's/^/x/g' `
+
+
+#        echo "start reachable"
+#        $reachable
+
+#        echo "start unreachable"
+#        $unreachable
 
 COUNT=0
 MAX_COUNT=10
@@ -54,23 +58,38 @@ while [ $COUNT -lt $MAX_COUNT ]
 do
         COUNT=`expr $COUNT + 1`
         #ひとまずroot権限有りアカウントで
-        sudo ping -f -c 5 `echo "$ip1"`.`echo "$ip2"`.`echo "$ip3"`.`echo "$COUNT"` > $temp1
+        ping -c 4 `echo "$ip1"`.`echo "$ip2"`.`echo "$ip3"`.`echo "$COUNT"` > $temp1
         #sudo ping -i 0.05 -c 5 `echo "$ip1"`.`echo "$ip2"`.`echo "$ip3"`.`echo "$COUNT"` > $temp1
         ####問題は此処から####
         ###ロジック的には問題ないように見えても、temp2が空ファイル出し続けるのは何かおかしい
 
         #疎通が通るならばreachableで終わり、temp2でログを追記
         #疎通が通らないならばreachableを無視し、unreachableでtemp2にログを追記
-        $reachable || $unreachable >> $temp2
+        #$reachable || $unreachable >> $temp2
 
+
+        #echo "start reachable"
+                #$reachable
+
+
+
+        if[ grep "packet loss" $temp1 | grep -v "100% packet loss" ]
+        then
+                sed -e 's/^/o/g' >> $temp2
+        elif [ grep "packet loss" $temp1 | grep "100% packet loss" ]
+        then
+                sed -e 's/^/x/g' >> $temp2
+        fi
+        #echo "start unreachable"
+        #$unreachable
         ### そもそもcaseでは"Strings"を取る為この書き方は不可能な気が
         #case "$output" in
         #r) grep -v "100% packet loss" | sed -e 's/^/o/g' >> $temp2 ;;
         #u) grep "100% packet loss" | sed -e 's/^/x/g' >> $temp2 ;;
         #esac
-        
+
         #気休め
-        sleep 6
+        #sleep 6
         # -c[count] 5一つで約5秒かかるが、sleepしなくても順序は飛ばさない模様？
         # sleep 5
 done
