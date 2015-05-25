@@ -56,11 +56,17 @@ do
         ####問題は此処から####
         ###ロジック的には問題ないように見えても、temp2が空ファイル出し続けるのは何かおかしい
 
-        $reachable | $unreachable >> $temp2
+        #疎通が通るならばreachableで終わり、temp2でログを追記
+        #疎通が通らないならばreachableを無視し、unreachableでtemp2にログを追記
+        $reachable || $unreachable >> $temp2
+
+        ### そもそもcaseでは"Strings"を取る為この書き方は不可能な気が
         #case "$output" in
         #r) grep -v "100% packet loss" | sed -e 's/^/o/g' >> $temp2 ;;
         #u) grep "100% packet loss" | sed -e 's/^/x/g' >> $temp2 ;;
         #esac
+        
+        #気休め
         sleep 6
         # -c[count] 5一つで約5秒かかるが、sleepしなくても順序は飛ばさない模様？
         # sleep 5
@@ -89,5 +95,5 @@ exit 0
 # 上にあるようにtemp1までは想定した挙動を見せるが、
 # pingの時点でflood pingコマンドに変更しても単体で実行するのと違い
 # 実行し終えるのに時間が掛かってしまう。
-# さらに、記述の仕方に問題があるとは思うがtemp2がどうやっても空ファイルになってしまうため
-# いまだに完成しない
+# さらに、記述の仕方に問題があるとは思うがtemp2が
+# どうやっても空ファイルになってしまうためいまだに完成しない
