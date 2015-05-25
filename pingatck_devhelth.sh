@@ -11,6 +11,9 @@ temp1=$(mktemp temp1.XXXX)
 temp2=$(mktemp temp2.XXXX)
 
 ####パイプ間のコマンドの説明
+###                     講習で使う際はパイプがない状態から徐々にコマンドをつなげていって、
+###                     どのような処理をしているのか触らせて教えるのが効果的と思われる。
+
 ## ip a                 -> ifconfigなどで使われるnet-toolsは長い間メンテナンスされていなかったということで大変危険なので
 ##                      (理由:http://iwashi.co/2014/08/07/reason-why-we-should-use-iproute2/ )
 ##                      https://dougvitale.wordpress.com/2011/12/21/deprecated-linux-networking-commands-and-their-replacements/)
