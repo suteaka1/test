@@ -55,7 +55,7 @@ do
         COUNT=`expr $COUNT + 1`
         #ひとまずroot権限有りアカウントで
         sudo ping -f -c 5 `echo "$ip1"`.`echo "$ip2"`.`echo "$ip3"`.`echo "$COUNT"` > $temp1
-
+        #sudo ping -i 0.05 -c 5 `echo "$ip1"`.`echo "$ip2"`.`echo "$ip3"`.`echo "$COUNT"` > $temp1
         ####問題は此処から####
         ###ロジック的には問題ないように見えても、temp2が空ファイル出し続けるのは何かおかしい
 
