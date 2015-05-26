@@ -9,7 +9,7 @@
 # pingしたときの一時作業スペース
 temp1=$(mktemp temp1.XXXX)
 temp2=$(mktemp temp2.XXXX)
-
+temp3=$(mktemp temp3.XXXX)
 ####パイプ間のコマンドの説明
 ## ip a                 -> ifconfigなどで使われるnet-toolsは長い間メンテナンスされていなかったということで大変危険なので
 ##                      (理由:http://iwashi.co/2014/08/07/reason-why-we-should-use-iproute2/ )
