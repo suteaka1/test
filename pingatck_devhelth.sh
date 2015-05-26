@@ -76,8 +76,7 @@ do
         if[ grep "packet loss" $temp1 | grep -v "100% packet loss" ]
         then
                 sed -e 's/^/o/g' >> $temp2
-        elif [ grep "packet loss" $temp1 | grep "100% packet loss" ]
-        then
+        else [ grep "packet loss" $temp1 | grep "100% packet loss" ]
                 sed -e 's/^/x/g' >> $temp2
         fi
         #echo "start unreachable"
