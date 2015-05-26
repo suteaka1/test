@@ -57,64 +57,19 @@ MAX_COUNT=10
 while [ $COUNT -lt $MAX_COUNT ]
 do
         COUNT=`expr $COUNT + 1`
-        #ひとまずroot権限有りアカウントで
+        `echo $ip1`.`echo $ip2`.`echo $ip3`.`echo $COUNT` >> $temp3
         ping -c 4 `echo "$ip1"`.`echo "$ip2"`.`echo "$ip3"`.`echo "$COUNT"` > $temp1
-        #sudo ping -i 0.05 -c 5 `echo "$ip1"`.`echo "$ip2"`.`echo "$ip3"`.`echo "$COUNT"` > $temp1
-        ####問題は此処から####
-        ###ロジック的には問題ないように見えても、temp2が空ファイル出し続けるのは何かおかしい
-
-        #疎通が通るならばreachableで終わり、temp2でログを追記
-        #疎通が通らないならばreachableを無視し、unreachableでtemp2にログを追記
-        #$reachable || $unreachable >> $temp2
-
-
-        #echo "start reachable"
-                #$reachable
-
-
-
-        if[ grep "packet loss" $temp1 | grep -v "100% packet loss" ]
-        then
-                sed -e 's/^/o/g' >> $temp2
-        else [ grep "packet loss" $temp1 | grep "100% packet loss" ]
-                sed -e 's/^/x/g' >> $temp2
-        fi
+#       grep "packet loss" $temp1 | grep "100% packet loss" > $temp2
+#       if [ -s $temp2 ]
+#       then
+#               sed -e 's/^/x/g' >> $temp3
+#               : > $temp2
+#       else
+#               grep "packet loss" $temp1 | grep -v "100% packet loss" | sed -e 's/^/o/g' >> $temp3
+#               : > $temp2
+#       fi
         #echo "start unreachable"
         #$unreachable
-        ### そもそもcaseでは"Strings"を取る為この書き方は不可能な気が
-        #case "$output" in
-        #r) grep -v "100% packet loss" | sed -e 's/^/o/g' >> $temp2 ;;
-        #u) grep "100% packet loss" | sed -e 's/^/x/g' >> $temp2 ;;
-        #esac
-
-        #気休め
-        #sleep 6
-        # -c[count] 5一つで約5秒かかるが、sleepしなくても順序は飛ばさない模様？
-        # sleep 5
 done
 
-#cat $temp2
-
 exit 0
-
-
-
-
-
-####課題
-#1.いらない処理が多いので削って簡素化する
-#2.devicehealth.shを組み込む。そのために、pingattack.shのループ内に組み込む
-#3.waitなりsleepなりをいれる
-#4.全体が終了するのに時間がかかる
-##早くするには以下がある
-## $ sudo ping -f -c 500 192.168.200.1
-##か
-## $ sudo ping -i 0.05 -c 500 192.168.200.1
-#があるがどっちもroot権限が必要なのがちょっと・・・
-
-####未解決
-# 上にあるようにtemp1までは想定した挙動を見せるが、
-# pingの時点でflood pingコマンドに変更しても単体で実行するのと違い
-# 実行し終えるのに時間が掛かってしまう。
-# さらに、記述の仕方に問題があるとは思うがtemp2が
-# どうやっても空ファイルになってしまうためいまだに完成しない
