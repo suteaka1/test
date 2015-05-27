@@ -22,6 +22,8 @@ do
                 echo "○        ${ipaddr}"
         fi
 done
-rm /tmp/$temp1
+
+#一番上で宣言してるので/tmpの記述は不要
+rm $temp1
 
 exit 0
