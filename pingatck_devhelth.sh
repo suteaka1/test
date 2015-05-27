@@ -1,4 +1,8 @@
 #!/bin/sh
+
+#https://gist.github.com/suteaka1/e567a8d9cdf3d79d3d93
+#前の議事録
+
 ip1=`ip a | grep 'inet' | grep 'eth0' | awk '{ print $2}' | sed -e 's/\/24//g' | tr '.' '    ' | awk '{ print $1}'`
 ip2=`ip a | grep 'inet' | grep 'eth0' | awk '{ print $2}' | sed -e 's/\/24//g' | tr '.' '    ' | awk '{ print $2}'`
 ip3=`ip a | grep 'inet' | grep 'eth0' | awk '{ print $2}' | sed -e 's/\/24//g' | tr '.' '    ' | awk '{ print $3}'`
