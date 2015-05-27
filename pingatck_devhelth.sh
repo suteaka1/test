@@ -13,7 +13,7 @@ do
         COUNT=`expr $COUNT + 1`
         ipaddr=${ip1}.${ip2}.${ip3}.${COUNT}
         echo "ping test:$ipaddr"
-        ping -c 4 $ipaddr > $temp1
+        ping -c 4 -w 4 $ipaddr > $temp1
         judge=`grep '100%' $temp1 | wc -l`
         if [ $judge -eq 1 ]
         then
