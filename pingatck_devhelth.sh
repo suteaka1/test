@@ -5,7 +5,7 @@ ip3=`ip a | grep 'inet' | grep 'eth0' | awk '{ print $2}' | sed -e 's/\/24//g' |
 ip4=`ip a | grep 'inet' | grep 'eth0' | awk '{ print $2}' | sed -e 's/\/24//g' | tr '.' '    ' | awk '{ print $4}'`
 
 COUNT=`echo " ${ip4} - 6" | bc`
-MAX_COUNT=`echo " ${ip4} +5" | bc`
+MAX_COUNT=`echo " ${ip4} + 5" | bc`
 
 while [ $COUNT -lt $MAX_COUNT ]
 do
