@@ -1,14 +1,11 @@
 #!/bin/sh
-
-#https://gist.github.com/suteaka1/e567a8d9cdf3d79d3d93
-#前の議事録
-
 ip1=`ip a | grep 'inet' | grep 'eth0' | awk '{ print $2}' | sed -e 's/\/24//g' | tr '.' '    ' | awk '{ print $1}'`
 ip2=`ip a | grep 'inet' | grep 'eth0' | awk '{ print $2}' | sed -e 's/\/24//g' | tr '.' '    ' | awk '{ print $2}'`
 ip3=`ip a | grep 'inet' | grep 'eth0' | awk '{ print $2}' | sed -e 's/\/24//g' | tr '.' '    ' | awk '{ print $3}'`
+ip4=`ip a | grep 'inet' | grep 'eth0' | awk '{ print $2}' | sed -e 's/\/24//g' | tr '.' '    ' | awk '{ print $4}'`
 
-COUNT=9
-MAX_COUNT=30
+COUNT=`echo " ${ip4} - 6" | bc`
+MAX_COUNT=`echo " ${ip4} +5" | bc`
 
 while [ $COUNT -lt $MAX_COUNT ]
 do
